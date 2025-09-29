@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Billu 🎂❤</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      margin: 0;
+      padding: 0;
+      overflow-y: auto; /* Scroll bar enabled */
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .hidden { display: none; }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      max-width: 500px;
+      margin: 20px;
+      animation: fadeIn 1s;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover { transform: scale(1.02); }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(45deg, #ff758c, #ff7eb3);
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(45deg, #ff4e63, #ff6b81);
+      transform: scale(1.05);
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 15px;
+      transition: transform 0.5s ease;
+    }
+
+    img:hover { transform: scale(1.05); }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(-45deg);
+      animation: floatUp 5s linear infinite;
+      border-radius: 5px;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { top: 0; left: 10px; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(-45deg); opacity:1; }
+      100% { transform: translateY(-800px) rotate(-45deg); opacity:0; }
+    }
+
+    h1 { color: #ff4e63; font-size: 3em; }
+
+    /* Spotify widget corner */
+    #spotifyWidget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 200px;
+      height: 60px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Small Spotify Player in Corner -->
+  <iframe id="spotifyWidget"
+          src="https://open.spotify.com/embed/track/3vCzLB6kS2lGcIpm1OOUsy?utm_source=generator"
+          frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy">
+  </iframe>
+
+  <!-- Step 1: Question -->
+  <div id="step1" class="card">
+    <h2>Question for you 💡</h2>
+    <p>What is my favorite word for you? (use small letters)</p>
+    <input type="text" id="answer" placeholder="Your Answer Baby.">
+    <br>
+    <button onclick="checkAnswer()">Submit💖</button>
+  </div>
+
+  <!-- Step 2: Secret Message -->
+  <div id="step2" class="card hidden">
+    <h2>Secret Message ❤</h2>
+    <p>Umesh, you are the best thing that happened to me 💕<br> </p>
+    <button onclick="nextStep(3)">Next ➡</button>
+  </div>
+
+  <!-- Step 3: Photos -->
+  <div id="step3" class="card hidden">
+    <h2>Our Memories 📸</h2>
+    <img id="photo" src="D:\2307070\bill5.jpg" alt="Memory">
+    <br>
+    <button onclick="nextPhoto()">Next Photo ➡</button>
+  </div>
+
+  <!-- Step 4: Final Message -->
+  <div id="step4" class="card hidden">
+    <h1>CUTIE💌 </h1>
+    <h2>Forever & Always 😘</h2>
+    <h4> me sodun baki saglya tuzya sister ahet samjl khadus...😤</h4>
+  </div>
+
+  <script>
+    let currentStep = 1;
+
+    // Array of images
+    let photos = [
+      "D:\2307070\billu1.jpg",
+      "D:/2307070/billu1.jpg",
+      "D:/2307070/billu2.jpg",
+      "D:/2307070/billu4.jpg",
+      "D:/2307070/billu6.jpg",
+ ];
+    let photoIndex = 0;
+
+    function checkAnswer() {
+      let ans = document.getElementById("answer").value.trim().toLowerCase();
+      if(ans === "billu") {
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.remove("hidden");
+      } else {
+        alert("Oops! Try again 😉");
+      }
+    }
+
+    function nextStep(step) {
+      document.getElementById("step" + currentStep).classList.add("hidden");
+      document.getElementById("step" + step).classList.remove("hidden");
+      currentStep = step;
+
+      // Show floating hearts on final step
+      if(step === 4) createHearts(50);
+    }
+
+    function nextPhoto() {
+      photoIndex++;
+      if(photoIndex < photos.length) {
+        let img = document.getElementById("photo");
+        img.src = photos[photoIndex];
+        img.style.transform = "scale(0.8)";
+        setTimeout(() => img.style.transform = "scale(1)", 200);
+      } else {
+        nextStep(4);
+      }
+    }
+
+    function createHearts(num) {
+      for(let i=0;i<num;i++){
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.animationDuration = (2 + Math.random()*3) + "s";
+        heart.style.width = heart.style.height = (10 + Math.random()*20) + "px";
+        document.body.appendChild(heart);
+      }
+    }
+  </script>
+
+</body>
+</html>
